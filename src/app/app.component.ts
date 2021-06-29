@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Post } from './model/Post'
 
 @Component({
   selector: 'app-root',
@@ -7,30 +8,20 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
  
-  start_date = new Date();
+  posts = new Array();
 
-  posts = [
-    {
-      'titre': 'Mon premier post',
-      'contenu': "Bonjour les zéros! Je suis en train d'apprendre Angular."
-                  + "\nEt je compte bien aller loin!",
-      'loveIts': 4,
-      'created_at': this.start_date
-    },
-    {
-      'titre' : 'Mon deuxième post',
-      'contenu' : "Bonjour les zéros! Je suis en train d'apprendre Angular."
-                  + "\nEt je compte bien aller loin!",
-      'loveIts': 0,
-      'created_at': this.start_date
-    },
-    {
-      'titre' : 'Encore un post',
-      'contenu' : "Bonjour les zéros! Je suis en train d'apprendre Angular."
-                   + "\nEt je compte bien aller loin!",
-      'loveIts': -4,
-      'created_at': this.start_date
-    }
-  ];
-  
+  constructor() {
+    const post1 = new Post();
+    post1.titre = 'Mon premier post';
+    this.posts.push(post1);
+
+    const post2 = new Post();
+    post2.titre = 'Mon deuxième post';
+    this.posts.push(post2);
+
+    const post3 = new Post();
+    post3.titre = 'Encore un autre post';
+    this.posts.push(post3);
+  }
+
 }
