@@ -10,7 +10,7 @@ export class PostListItemComponent implements OnInit {
   @Input() titre = '';
   @Input() contenu = '';
   @Input() loveIts = 0;
-  @Input() created_at = new Date();
+  @Input() createdAt = new Date();
 
   constructor() { }
 
