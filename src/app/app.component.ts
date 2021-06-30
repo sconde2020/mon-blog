@@ -1,27 +1,20 @@
-import { Component } from '@angular/core';
-import { Post } from './model/Post'
+import { Component, OnInit } from '@angular/core';
+import { Post } from './models/post.model';
+import { PostService } from './services/post.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
  
-  posts = new Array();
+  posts!: Post[];
 
-  constructor() {
-    const post1 = new Post();
-    post1.titre = 'Mon premier post';
-    this.posts.push(post1);
+  constructor(private postService : PostService) { }
 
-    const post2 = new Post();
-    post2.titre = 'Mon deuxième post';
-    this.posts.push(post2);
-
-    const post3 = new Post();
-    post3.titre = 'Encore un autre post';
-    this.posts.push(post3);
+  ngOnInit() {
+    this.posts = this.postService.posts;
   }
 
 }
