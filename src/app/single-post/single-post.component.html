@@ -1,4 +1,4 @@
-<li [ngClass]="{'list-group-item': true,
+<div [ngClass]="{'list-group-item': true,
                 'list-group-item-success': loveIts > 0,
                 'list-group-item-danger': loveIts < 0 }">
     <h3 style="display: inline;">{{ titre }}</h3>
@@ -6,5 +6,5 @@
     <p>{{ contenu }}</p>
     <button class="btn btn-success margin-right-xs" (click)="onLoveIt()">Love It</button>
     <button class="btn btn-danger" (click)="onDontLoveIt()">Don't Love It</button>
-    <a [routerLink]="[id]" class="pull-right">Détail</a>
-</li>
+    <a routerLink="/posts" class="pull-right">Retour à la liste</a>
+</div>

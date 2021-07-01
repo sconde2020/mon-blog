@@ -8,20 +8,24 @@ import { PostListItemComponent } from './post-list-item/post-list-item.component
 import { PostService } from './services/post.service';
 import { AuthComponent } from './auth/auth.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthService } from './services/auth.service';
+import { SinglePostComponent } from './single-post/single-post.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostListComponent,
     PostListItemComponent,
-    AuthComponent
+    AuthComponent,
+    SinglePostComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
   providers: [
-    PostService
+    PostService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

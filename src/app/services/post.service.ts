@@ -10,7 +10,7 @@ export class PostService {
         const post1 = new Post();
         post1.titre = 'Mon premier post';
         this.posts.push(post1);
-
+ 
         const post2 = new Post();
         post2.titre = 'Mon deuxième post';
         this.posts.push(post2);
@@ -28,5 +28,12 @@ export class PostService {
         this.posts[index].loveIts--;
     }
 
-  
+    getPostById(id: number) : Post {        
+        const post: Post = <Post>this.posts.find(
+            (post) => { 
+                return post.id === id; 
+            }
+        );
+        return post;
+      }
 }
