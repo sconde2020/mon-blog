@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Post } from '../models/post.model';
 import { PostService } from '../services/post.service';
 
 @Component({
@@ -9,32 +10,25 @@ import { PostService } from '../services/post.service';
 })
 export class SinglePostComponent implements OnInit {
 
-  id!: number;
-  titre!: string;
-  contenu!: string;
-  loveIts!: number;
-  createdAt!: Date; 
+  post!: Post;
 
   constructor(private postService: PostService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['id'];
-    this.titre = this.postService.getPostById(+this.id).titre;
-    this.contenu = this.postService.getPostById(+this.id).contenu;
-    this.loveIts = this.postService.getPostById(+this.id).loveIts;
-    this.createdAt = this.postService.getPostById(+this.id).createdAt;
+    const id = this.route.snapshot.params['id'];
+    this.post = this.postService.getPostById(+id);        
   }
 
   onLoveIt() {
-    this.postService.loveIt(+this.id);  
-    this.loveIts = this.postService.getPostById(+this.id).loveIts;
+    this.postService.loveIt(this.post.id);  
+    this.post = this.postService.getPostById(this.post.id);
   }
 
   onDontLoveIt() {
-    this.postService.dontLoveIt(+this.id);
-    this.loveIts = this.postService.getPostById(+this.id).loveIts;
+    this.postService.dontLoveIt(this.post.id);  
+    this.post = this.postService.getPostById(this.post.id);
   }
-
 
 }

@@ -10,6 +10,9 @@ import { AuthComponent } from './auth/auth.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { SinglePostComponent } from './single-post/single-post.component';
+import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
+import { AuthGuard } from './services/auth-guard.service';
+import { PostGuard } from './services/post-guard.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,8 @@ import { SinglePostComponent } from './single-post/single-post.component';
     PostListComponent,
     PostListItemComponent,
     AuthComponent,
-    SinglePostComponent
+    SinglePostComponent,
+    FourOhFourComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +29,9 @@ import { SinglePostComponent } from './single-post/single-post.component';
   ],
   providers: [
     PostService,
-    AuthService
+    AuthService,
+    AuthGuard,
+    PostGuard
   ],
   bootstrap: [AppComponent]
 })
