@@ -12,7 +12,6 @@ import { AuthService } from './services/auth.service';
 import { SinglePostComponent } from './single-post/single-post.component';
 import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
 import { AuthGuard } from './services/auth-guard.service';
-import { PostGuard } from './services/post-guard.service';
 
 @NgModule({
   declarations: [
@@ -30,8 +29,7 @@ import { PostGuard } from './services/post-guard.service';
   providers: [
     PostService,
     AuthService,
-    AuthGuard,
-    PostGuard
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -5,7 +5,6 @@ export class PostService {
     
     private posts!: Post[];
     postSubject = new Subject<Post[]>();
-    postEmptySubject = new Subject();
 
     constructor() {
         this.posts = new Array<Post>();
@@ -25,7 +24,6 @@ export class PostService {
 
     emitPostSubject() {
       this.postSubject.next(this.posts.slice());
-      this.postEmptySubject.next();
     }
 
     loveIt(index: number) {
@@ -36,10 +34,5 @@ export class PostService {
     dontLoveIt(index: number) {
         this.posts[index].loveIts--;
         this.emitPostSubject();
-    }
-
-    getPostById(id: number) : Post {        
-        const post = <Post>this.posts.find( post => post.id === id );
-        return <Post>JSON.parse(JSON.stringify(post));
     }
 }

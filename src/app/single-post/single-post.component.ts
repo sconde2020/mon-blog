@@ -22,10 +22,10 @@ export class SinglePostComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit(): void {
-    const index = this.route.snapshot.params['id'];    
-    this.postSubscription = this.postService.postEmptySubject.subscribe(
-      () => this.post = this.postService.getPostById(+index)
-    );   
+    const index = +this.route.snapshot.params['id'];     
+    this.postSubscription = this.postService.postSubject.subscribe(
+      (posts: Post[]) => this.post = <Post>posts.find(post => post.id === index)
+    )
     this.postService.emitPostSubject();
   }
 
