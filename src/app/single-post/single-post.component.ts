@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { from } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators'
+
 import { Post } from '../models/post.model';
 import { PostService } from '../services/post.service';
 
@@ -8,27 +12,32 @@ import { PostService } from '../services/post.service';
   templateUrl: './single-post.component.html',
   styleUrls: ['./single-post.component.scss']
 })
-export class SinglePostComponent implements OnInit {
+export class SinglePostComponent implements OnInit, OnDestroy {
 
   post!: Post;
+  postSubscription!: Subscription;
 
   constructor(private postService: PostService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['id'];
-    this.post = this.postService.getPostById(+id);        
+    const index = this.route.snapshot.params['id'];    
+    this.postSubscription = this.postService.postEmptySubject.subscribe(
+      () => this.post = this.postService.getPostById(+index)
+    );   
+    this.postService.emitPostSubject();
   }
 
   onLoveIt() {
     this.postService.loveIt(this.post.id);  
-    this.post = this.postService.getPostById(this.post.id);
   }
 
   onDontLoveIt() {
     this.postService.dontLoveIt(this.post.id);  
-    this.post = this.postService.getPostById(this.post.id);
   }
 
+  ngOnDestroy() {
+    this.postSubscription.unsubscribe();
+  }
 }

@@ -1,8 +1,11 @@
+import { Subject } from "rxjs";
 import { Post } from "../models/post.model";
 
 export class PostService {
     
-    posts!: Post[];
+    private posts!: Post[];
+    postSubject = new Subject<Post[]>();
+    postEmptySubject = new Subject();
 
     constructor() {
         this.posts = new Array<Post>();
@@ -10,7 +13,7 @@ export class PostService {
         const post1 = new Post();
         post1.titre = 'Mon premier post';
         this.posts.push(post1);
- 
+        
         const post2 = new Post();
         post2.titre = 'Mon deuxième post';
         this.posts.push(post2);
@@ -20,20 +23,23 @@ export class PostService {
         this.posts.push(post3);
     }
 
+    emitPostSubject() {
+      this.postSubject.next(this.posts.slice());
+      this.postEmptySubject.next();
+    }
+
     loveIt(index: number) {
         this.posts[index].loveIts++;
+        this.emitPostSubject();
     }
 
     dontLoveIt(index: number) {
         this.posts[index].loveIts--;
+        this.emitPostSubject();
     }
 
     getPostById(id: number) : Post {        
-        const post: Post = <Post>this.posts.find(
-            (post) => { 
-                return post.id === id; 
-            }
-        );
-        return post;
-      }
+        const post = <Post>this.posts.find( post => post.id === id );
+        return <Post>JSON.parse(JSON.stringify(post));
+    }
 }
