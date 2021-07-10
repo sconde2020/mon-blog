@@ -1,1 +1,20 @@
-<p>new-post works!</p>
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">        
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+            <h2>Nouveau Post</h2>
+            <div class="form-group">
+                <label for="titre">
+                    Titre
+                </label>
+                <input type="text" id="titre" class="form-control" name="titre" ngModel required>
+            </div>
+            <div class="form-group">
+                <label for="contenu">
+                    Contenu
+                </label><br>
+                <textarea id="contenu" cols="30" rows="10" name="contenu" ngModel required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Soumettre</button>
+        </form>        
+    </div>
+</div>
