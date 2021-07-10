@@ -20,11 +20,14 @@ export class PostListItemComponent implements OnInit {
   }
 
   onLoveIt() {
-    this.postService.loveIt(this.id);  
+    this.postService.lovePost(this.id);  
   }
 
   onDontLoveIt() {
-    this.postService.dontLoveIt(this.id);
+    this.postService.dontLovePost(this.id);
   }
 
+  onRemoveIt() {
+    this.postService.removePost(this.id);
+  }
 }

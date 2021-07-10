@@ -26,13 +26,23 @@ export class PostService {
       this.postSubject.next(this.posts.slice());
     }
 
-    loveIt(index: number) {
+    lovePost(index: number) {
         this.posts[index].loveIts++;
         this.emitPostSubject();
     }
 
-    dontLoveIt(index: number) {
+    dontLovePost(index: number) {
         this.posts[index].loveIts--;
+        this.emitPostSubject();
+    }
+
+    addPost(post: Post) {
+        this.posts.push(post);
+        this.emitPostSubject();
+    }
+
+    removePost(index: number) {
+        this.posts.splice(index, 1);
         this.emitPostSubject();
     }
 }

@@ -6,5 +6,6 @@
     <p>{{ contenu }}</p>
     <button class="btn btn-success margin-right-xs" (click)="onLoveIt()">Love It</button>
     <button class="btn btn-danger" (click)="onDontLoveIt()">Don't Love It</button>
-    <a [routerLink]="[id]" class="pull-right">Détail</a>
+    <button class="btn btn-danger pull-right" (click)="onRemoveIt()">Supprimer post</button>
+    <a [routerLink]="[id]" class="pull-left">Détail</a>
 </li>
