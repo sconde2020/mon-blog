@@ -5,7 +5,8 @@ export class Post {
     loveIts !: number;
     createdAt !: Date;
 
-    constructor() { 
+    constructor(titre: string) { 
+        this.titre = titre;
         this.contenu = "Bonjour les zéros! Je suis en train d'apprendre Angular."
         + "\nEt je compte bien aller loin!";
         this.loveIts = 0;

@@ -3,22 +3,17 @@ import { Post } from "../models/post.model";
 
 export class PostService {
     
-    private posts!: Post[];
+    private posts = new Array<Post>();
     postSubject = new Subject<Post[]>();
 
     constructor() {
-        this.posts = new Array<Post>();
-
-        const post1 = new Post();
-        post1.titre = 'Mon premier post';
+        const post1 = new Post('Mon premier post');
         this.posts.push(post1);
         
-        const post2 = new Post();
-        post2.titre = 'Mon deuxième post';
+        const post2 = new Post('Mon deuxième post');
         this.posts.push(post2);
 
-        const post3 = new Post();
-        post3.titre = 'Encore un autre post';
+        const post3 = new Post('Mon troisième post');
         this.posts.push(post3);
     }
 

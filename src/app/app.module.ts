@@ -12,6 +12,7 @@ import { AuthService } from './services/auth.service';
 import { SinglePostComponent } from './single-post/single-post.component';
 import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
 import { AuthGuard } from './services/auth-guard.service';
+import { NewPostComponent } from './new-post/new-post.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AuthGuard } from './services/auth-guard.service';
     PostListItemComponent,
     AuthComponent,
     SinglePostComponent,
-    FourOhFourComponent
+    FourOhFourComponent,
+    NewPostComponent
   ],
   imports: [
     BrowserModule,
