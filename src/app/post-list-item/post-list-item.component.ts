@@ -9,10 +9,11 @@ import { PostService } from '../services/post.service';
 export class PostListItemComponent implements OnInit {
 
   @Input() id!: number;
-  @Input() titre!: string;
-  @Input() contenu!: string;
-  @Input() loveIts!: number;
+  @Input() postTitle!: string;
+  @Input() content!: string;
+  @Input() loveIt!: number;
   @Input() createdAt!: Date;  
+  @Input() updatedAt!: Date;  
 
   constructor(private postService: PostService) { }
 

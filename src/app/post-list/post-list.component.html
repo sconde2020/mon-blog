@@ -1,10 +1,10 @@
 <ul class="list-group">    
-    <app-post-list-item *ngFor="let post of posts; let id = index"
-                [id]="id"
-                [titre]="post.titre" 
-                [contenu]="post.contenu"
-                [loveIts]="post.loveIts"
-                [createdAt]="post.createdAt"></app-post-list-item>      
+    <app-post-list-item *ngFor="let post of posts"
+                [id]="post.id"
+                [postTitle]="post.title" 
+                [content]="post.content"
+                [loveIt]="post.loveIt"
+                [createdAt]="post.createdAt"
+                [updatedAt]="post.updatedAt"></app-post-list-item>      
 </ul>
-<button class="btn btn-primary"
-            (click)="onSave()">Enregistrer</button>
+

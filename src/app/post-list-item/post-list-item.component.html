@@ -1,9 +1,9 @@
 <li [ngClass]="{'list-group-item': true,
-                'list-group-item-success': loveIts > 0,
-                'list-group-item-danger': loveIts < 0 }">
-    <h3 style="display: inline;">{{ titre }}</h3>
-    <span class="pull-right">{{ createdAt | date: 'dd/MM/yy, hh:mm a' }}</span>
-    <p>{{ contenu }}</p>
+                'list-group-item-success': loveIt > 0,
+                'list-group-item-danger': loveIt < 0 }">
+    <h3 style="display: inline;">{{ postTitle }}</h3>
+    <span class="pull-right">{{ updatedAt | date: 'dd/MM/yy, hh:mm a' }}</span>
+    <p>{{ content }}</p>
     <button class="btn btn-success margin-right-xs" (click)="onLoveIt()">Love It</button>
     <button class="btn btn-danger" (click)="onDontLoveIt()">Don't Love It</button>
     <button class="btn btn-danger pull-right" (click)="onRemoveIt()">Supprimer post</button>
