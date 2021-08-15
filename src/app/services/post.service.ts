@@ -12,33 +12,67 @@ export class PostService {
     postSubject = new Subject<Post[]>();
 
     constructor(private httpClient: HttpClient) {
-     //  const post = new Post("Mon premier post")
-       //this.posts.push(post);    
-       
-     //  const post2 = new Post("Mon deuxième post")
-       //this.posts.push(post2);    
-
-      this.getPosts();
+        this.getPosts();
     }
 
     emitPostSubject() {
-      this.getPosts();
-      this.postSubject.next(this.posts.slice());
+        this.getPosts();
+        this.postSubject.next(this.posts.slice());
+    }
+
+    getPosts() {
+        this.httpClient
+            .get<any[]>(this.BACKEND_URL)
+            .subscribe(
+                (response) => this.posts = response,
+                (error) => console.log("Error at the fetching posts")
+            )
+    }
+
+    savePosts() {
+        this.httpClient
+            .put(this.BACKEND_URL, this.posts)
+            .subscribe(
+                () => {
+                    console.log('Enregistrement terminé');
+                },
+                (error) => console.log("Erreur d'enregistrement: " + error)
+            );
+    }
+
+    addPost(post: Post) {
+        this.posts.push(post);
+        this.httpClient
+            .put(this.BACKEND_URL, this.posts)
+            .subscribe(
+                (response) => {
+                    console.log('Post created successfully!');
+                },
+                (error) => console.log('Error when creation post: ' + error)
+            );
+        this.emitPostSubject();
     }
 
     lovePost(index: number) {
-        // const post = this.getSinglePost(index);
-        // post.loveIts++;
-        // this.updatePost(post);        
+        this.posts[index].loveIts++;
+        this.updatePost();
     }
 
     dontLovePost(index: number) {
-        // const post = this.getSinglePost(index);
-        // post.loveIts--;
-        // this.updatePost(post);       
+        this.posts[index].loveIts--;
+        this.updatePost();
     }
 
 
+    updatePost() {
+        this.httpClient
+            .put(this.BACKEND_URL, this.posts)
+            .subscribe(
+                () => console.log('Post updated successfully!'),
+                (error) => console.log('Error when updating post: ' + error)
+            );
+        this.emitPostSubject();
+    }
 
     // getSinglePost(id: number) : Post {
     //     let post = new Post();
@@ -51,30 +85,6 @@ export class PostService {
     //     return post;   
     // }
 
-    addPost(post: Post) {
-         this.posts.push(post);
-         this.httpClient
-        .put(this.BACKEND_URL, this.posts)
-          .subscribe(
-            (response) =>  { 
-                 console.log('Post created successfully!');                 
-           },
-           (error) => console.log('Error when creation post: ' + error)
-       );
-      this.emitPostSubject();
-    }
-
-    // updatePost(post: Post) {
-    //     this.httpClient
-    //      .put<Post>(this.BACKEND_URL, post)
-    //      .subscribe(
-    //         () =>  { 
-    //             console.log('Post updated successfully!'); 
-    //             this.emitPostSubject();
-    //         },
-    //         (error) => console.log('Error when updating post: ' + error)
-    //      );
-    // }
 
     removePost(id: number) {
         // this.httpClient
@@ -86,25 +96,5 @@ export class PostService {
         //     },
         //     (error) => console.log('Error when deleting post: ' + error)
         //  );
-    }
-
-    getPosts() {
-        this.httpClient
-         .get<any[]>(this.BACKEND_URL)
-         .subscribe(
-             (response) => this.posts = response,
-             (error) => console.log("Error at the fetching posts")
-         )
-    }
-
-    savePosts() {
-        this.httpClient
-         .put(this.BACKEND_URL, this.posts)
-         .subscribe(
-             () => { 
-                console.log('Enregistrement terminé');
-             },
-             (error) => console.log("Erreur d'enregistrement: " + error)
-         );
     }
 }
