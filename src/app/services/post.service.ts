@@ -3,18 +3,18 @@ import { HttpClient } from '@angular/common/http';
 
 import { Post } from "../models/post.model";
 import { Injectable } from "@angular/core";
+import { PostData } from "../models/postData.model";
 
 @Injectable()
 export class PostService {
 
-    private readonly BACKEND_URL = 'https://web-with-angular.firebaseio.com/posts.json';
+    private readonly BACKEND_URL = 'http://localhost:9292/soul-blog/posts';
 
     private posts = new Array<Post>();
     public postSubject = new Subject<Post[]>();
 
     constructor(private httpClient: HttpClient) {
-        const post = new Post('First Post');
-        this.posts.push(post);
+        this.getPosts();
     }
 
     emitPostSubject() {
@@ -22,48 +22,26 @@ export class PostService {
     }
 
     getPosts() {        
-        // this.httpClient
-        //     .get<any[]>(this.BACKEND_URL)
-        //     .subscribe(
-        //         (response) => this.posts = response,
-        //         (error) => console.log("Error at the fetching posts")
-        //     )
+        this.httpClient
+            .get<any[]>(this.BACKEND_URL)
+            .subscribe(
+                (response) => this.posts = response,
+                (error) => console.log("Error at the fetching posts")
+            )
     }
 
-    savePosts() {
-        // this.httpClient
-        //     .put(this.BACKEND_URL, this.posts)
-        //     .subscribe(
-        //         () => {
-        //             console.log('Enregistrement terminé');
-        //         },
-        //         (error) => console.log("Erreur d'enregistrement: " + error)
-        //     );
+    addPost(postData: PostData) {   
+        this.httpClient
+            .post(this.BACKEND_URL, postData)
+            .subscribe(
+                (response) => {
+                    console.log('Post created successfully!');
+                    this.posts.push(<Post>response);
+                    this.emitPostSubject();
+                },
+                (error) => console.log('Error when creation post: ' + error)
+            );
     }
-
-    addPost(post: Post) {
-        // this.posts.push(post);
-        // this.httpClient
-        //     .put(this.BACKEND_URL, this.posts)
-        //     .subscribe(
-        //         (response) => {
-        //             console.log('Post created successfully!');
-        //         },
-        //         (error) => console.log('Error when creation post: ' + error)
-        //     );
-        // this.emitPostSubject();
-    }
-
-    lovePost(index: number) {
-        this.posts[index].loveIt++;
-        this.emitPostSubject();
-    }
-
-    dontLovePost(index: number) {
-        this.posts[index].loveIt--;
-        this.emitPostSubject();
-    }
-
 
     updatePost() {
         // this.httpClient
@@ -75,18 +53,6 @@ export class PostService {
         // this.emitPostSubject();
     }
 
-    // getSinglePost(id: number) : Post {
-    //     let post = new Post();
-    //     this.httpClient
-    //      .get<Post>(this.BACKEND_URL + '/' + id)
-    //      .subscribe(
-    //        (response) => post = response,
-    //        (error) =>  console.log('Error when fetching the post : ' + error)
-    //      );    
-    //     return post;   
-    // }
-
-
     removePost(id: number) {
         // this.httpClient
         //  .delete<Post>(this.BACKEND_URL + '/' + id)
@@ -97,5 +63,31 @@ export class PostService {
         //     },
         //     (error) => console.log('Error when deleting post: ' + error)
         //  );
+    }
+
+    getPostById(id: number) : Post {
+        return <Post>this.posts.find( post => post.id == id );      
+    }
+
+    lovePost(id: number) { 
+        this.getPostById(id).loveIt++;
+        this.emitPostSubject();
+    }
+
+    dontLovePost(id: number) {
+        this.getPostById(id).loveIt--;
+        this.emitPostSubject();
+    }
+
+    getPostByIdOnServer(id: number) {
+        console.log("url: " + this.BACKEND_URL + '/' + id);
+        let post = new Post();
+        this.httpClient
+         .get<Post>(this.BACKEND_URL + '/' + id)
+         .subscribe(
+           (response) => { post = response; console.log("title: " + post.title);},
+           (error) =>  console.log('Error when fetching the post : ' + error)
+         );    
+        return post;
     }
 }

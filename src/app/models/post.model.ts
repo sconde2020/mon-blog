@@ -14,7 +14,7 @@ export class Post {
                                     + "\nEt je compte bien aller loin!";
 
      constructor(title?: string, content?: string) { 
-        this.id = Post.COUNTER++;
+        this.id = ++Post.COUNTER;
         this.title = title == null ? '' : title;
         this.content = content == null ? Post.defaultContent : content;
         this.loveIt = 0;

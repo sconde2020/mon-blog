@@ -14,7 +14,7 @@ import { PostService } from '../services/post.service';
 })
 export class SinglePostComponent implements OnInit, OnDestroy {
 
-  index!: number;
+  id!: number;
   post!: Post;
   postSubscription!: Subscription;
 
@@ -23,21 +23,22 @@ export class SinglePostComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.index = +this.route.snapshot.params['id'];     
+    this.id = +this.route.snapshot.params['id'];    
+    console.log("post id: " + this.id); 
     this.postSubscription = this.postService.postSubject.subscribe(
       (posts: Post[]) => this.post = <Post>posts.find(
-        (post, index) => index === this.index
+        (post) => post.id === this.id
       )
     )
     this.postService.emitPostSubject();
   }
 
   onLoveIt() {
-    this.postService.lovePost(this.index);  
+    this.postService.lovePost(this.id);  
   }
 
   onDontLoveIt() {
-    this.postService.dontLovePost(this.index);  
+    this.postService.dontLovePost(this.id);  
   }
 
   ngOnDestroy() {
