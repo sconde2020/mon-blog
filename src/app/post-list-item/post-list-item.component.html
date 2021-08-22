@@ -1,11 +1,11 @@
 <li [ngClass]="{'list-group-item': true,
-                'list-group-item-success': loveIt > 0,
-                'list-group-item-danger': loveIt < 0 }">
-    <h3 style="display: inline;">{{ postTitle }}</h3>
-    <span class="pull-right">{{ updatedAt | date: 'dd/MM/yy, hh:mm a' }}</span>
-    <p>{{ content }}</p>
+                'list-group-item-success': post.loveIt > 0,
+                'list-group-item-danger': post.loveIt < 0 }">
+    <h3 style="display: inline;">{{ post.title }}</h3>
+    <span class="pull-right">{{ post.updatedAt| date: 'dd/MM/yy, hh:mm a' }}</span>
+    <p>{{ post.content }}</p>
     <button class="btn btn-success margin-rigt-xl" (click)="onLoveIt()">Love It</button>
     <button class="btn btn-danger" (click)="onDontLoveIt()">Don't Love It</button>
     <button class="btn btn-danger pull-right" (click)="onRemoveIt()">Remove post</button>
-    <a [routerLink]="[id]" class="pull-left margin-right-xs" >Detail</a>
+    <a [routerLink]="[post.id]" class="pull-left margin-right-xs" >Detail</a>
 </li>

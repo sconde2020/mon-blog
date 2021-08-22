@@ -34,11 +34,11 @@ export class SinglePostComponent implements OnInit, OnDestroy {
   }
 
   onLoveIt() {
-    this.postService.lovePost(this.id);  
+    this.postService.lovePost(this.post);  
   }
 
   onDontLoveIt() {
-    this.postService.dontLovePost(this.id);  
+    this.postService.dontLovePost(this.post);  
   }
 
   ngOnDestroy() {
