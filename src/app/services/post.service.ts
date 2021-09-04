@@ -7,10 +7,8 @@ import { PostData } from "../models/postData.model";
 
 
 @Injectable()
-export class PostService {
-
-    private readonly BACKEND_URL = 'http://localhost:9292/soul-blog/posts';
-
+export class PostService {  
+    private readonly BACKEND_URL = 'http://localhost:9292/soul-blog';
     private posts = new Array<Post>();
     public postSubject = new Subject<Post[]>();
 
@@ -18,13 +16,13 @@ export class PostService {
         this.getPosts();
     }
 
-    async emitPostSubject() {       
+    emitPostSubject() {       
         this.postSubject.next(this.posts.slice());
     }
 
     getPosts() {        
         this.httpClient
-            .get<any[]>(this.BACKEND_URL)
+            .get<any[]>(this.BACKEND_URL + '/posts')
             .subscribe(
                 (response) => { 
                     console.log('Post retrieved successfully!');
@@ -35,9 +33,22 @@ export class PostService {
             )       
     }
 
+    findPost(searchTerm: string) {
+        this.httpClient
+         .get<any[]>(this.BACKEND_URL + '/find', { params : { 'keyWord' : searchTerm } } )
+         .subscribe(
+            (response) =>  { 
+                console.log('Posts retrieved successfully!'); 
+                this.posts = response;
+                this.emitPostSubject();
+            },
+            (error) => console.log('Error when deleting post: ' + error)
+         );
+    }
+
     addPost(postData: PostData) {   
         this.httpClient
-            .post(this.BACKEND_URL, postData)
+            .post(this.BACKEND_URL + '/posts', postData)
             .subscribe(
                 (response) => {
                     console.log('Post created successfully!');
@@ -49,7 +60,7 @@ export class PostService {
 
     updatePost(post: Post) {
         this.httpClient
-            .put(this.BACKEND_URL, post)
+            .put(this.BACKEND_URL + '/posts', post)
             .subscribe(
                 () => {
                     console.log('Post updated successfully!');
@@ -61,7 +72,7 @@ export class PostService {
 
     removePost(id: number) {
         this.httpClient
-         .delete<Post>(this.BACKEND_URL, { params : { 'id' : id } } )
+         .delete<Post>(this.BACKEND_URL + '/posts', { params : { 'id' : id } } )
          .subscribe(
             () =>  { 
                 console.log('Post deleted successfully!'); 

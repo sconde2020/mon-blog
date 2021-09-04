@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { NgForm } from '@angular/forms';
 import { Post } from '../models/post.model';
 import { PostService } from '../services/post.service';
 
@@ -24,8 +25,15 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postService.emitPostSubject();
   }
 
+  onSearch(form: NgForm) {
+    const searchTerm = form.value['searchTerm'];
+    this.postService.findPost(searchTerm);
+  }
+
   ngOnDestroy() {
     this.postSubscription.unsubscribe();
   }
 
 }
+
+
