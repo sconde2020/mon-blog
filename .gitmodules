@@ -1,0 +1,3 @@
+[submodule "mon-blog-backend"]
+	path = mon-blog-backend
+	url = https://github.com/sconde2020/mon-blog-backend
